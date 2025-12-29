@@ -18,7 +18,7 @@
 	"jobs": {
 		"check": {
 			"name": "Check code quality",
-			"container": "fedora:40",
+			"container": "fedora:43",
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{
