@@ -137,21 +137,21 @@ public:
 		// Create a suppressed copy used only for cluster spanning
 		const Image<T> *span_src = &m_img_blurred;
 
-		const Eigen::Index suppression_radius = casts::to_eigen(m_config.peak_suppression_radius);
+		const Eigen::Index suppression_radius =
+			casts::to_eigen(m_config.peak_suppression_radius);
 		if (suppression_radius >= 1) {
 			const T suppression_factor = m_config.peak_suppression_factor;
-			suppression::darken_around_maximas(
-				m_img_blurred,
-				m_maximas,
-				suppression_radius,
-				suppression_factor,
-				m_img_span
-			);
+			suppression::darken_around_maximas(m_img_blurred,
+			                                   m_maximas,
+			                                   suppression_radius,
+			                                   suppression_factor,
+			                                   m_img_span);
 
 			span_src = &m_img_span;
 		}
 
-		// Iterate over the maximas and start building clusters (on suppressed image if enabled)
+		// Iterate over the maximas and start building clusters (on suppressed image if
+		// enabled)
 		for (const Point &point : m_maximas) {
 			Box cluster = cluster::span(*span_src, point, athresh, dthresh);
 

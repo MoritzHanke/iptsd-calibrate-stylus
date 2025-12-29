@@ -94,7 +94,8 @@ void darken_around_maximas(const DenseBase<Derived> &in,
 
 			const T target = in(ny, nx) * f;
 
-			// Use min() against (in*factor) to prevent multi-maxima "stacking" darkness.
+			// Use min() against (in*factor) to prevent multi-maxima "stacking"
+			// darkness.
 			out(ny, nx) = std::min(out(ny, nx), target);
 		}
 	}
