@@ -39,21 +39,24 @@ private:
 	// The last known state of the stylus.
 	ipts::samples::Stylus m_last;
 
-	//used in update() to allow user to manually calibrate stylus position
+	// used in update() to allow user to manually calibrate stylus position
 	f64 offsetX = 0.0;
 	f64 scaleX = 1.0;
 	f64 offsetY = 0.0;
 	f64 scaleY = 1.0;
 
 public:
-	StylusDevice(const core::Config &config, const core::DeviceInfo &info) :
-		// idea behind offset calculation:
-		// offset left:		add offsetLeft/width to x-pos and scale x-pos to range: 0, (1-offsetLeft/width)
-		// offset right:	scale x-pos to range: 0, (1+offsetRight/width)
-		offsetX(config.stylus_offset_left/config.width),
-		scaleX((config.width-config.stylus_offset_left+config.stylus_offset_right)/config.width),
-		offsetY(config.stylus_offset_top/config.height),
-		scaleY((config.height-config.stylus_offset_top+config.stylus_offset_bottom)/config.height)
+	StylusDevice(const core::Config &config, const core::DeviceInfo &info)
+		: // idea behind offset calculation:
+	          // offset left:		add offsetLeft/width to x-pos and scale x-pos to
+	          // range: 0, (1-offsetLeft/width) offset right:	scale x-pos to range: 0,
+	          // (1+offsetRight/width)
+		  offsetX(config.stylus_offset_left / config.width),
+		  scaleX((config.width - config.stylus_offset_left + config.stylus_offset_right) /
+	                 config.width),
+		  offsetY(config.stylus_offset_top / config.height),
+		  scaleY((config.height - config.stylus_offset_top + config.stylus_offset_bottom) /
+	                 config.height)
 	{
 		m_uinput->set_name("Stylus");
 		m_uinput->set_vendor(info.vendor);
@@ -103,9 +106,12 @@ public:
 		if (m_active) {
 			const Vector2<i32> tilt = calculate_tilt(data.altitude, data.azimuth);
 
-			//read input data, apply user-defined offsets at screen edges and scale to MAX_X/Y
-			const i32 x = casts::to<i32>(std::round((offsetX+data.x*scaleX) * MAX_X));
-			const i32 y = casts::to<i32>(std::round((offsetY+data.y *scaleY)*MAX_Y));
+			// read input data, apply user-defined offsets at screen edges and scale to
+			// MAX_X/Y
+			const i32 x =
+				casts::to<i32>(std::round((offsetX + data.x * scaleX) * MAX_X));
+			const i32 y =
+				casts::to<i32>(std::round((offsetY + data.y * scaleY) * MAX_Y));
 			const i32 pressure = casts::to<i32>(std::round(data.pressure * MAX_P));
 
 			m_uinput->emit(EV_KEY, BTN_TOUCH, data.contact ? 1 : 0);
