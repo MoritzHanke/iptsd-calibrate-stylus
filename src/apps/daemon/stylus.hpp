@@ -48,9 +48,9 @@ private:
 public:
 	StylusDevice(const core::Config &config, const core::DeviceInfo &info)
 		: // idea behind offset calculation:
-	          // offset left:		add offsetLeft/width to x-pos and scale x-pos to
-	          // range: 0, (1-offsetLeft/width) offset right:	scale x-pos to range: 0,
-	          // (1+offsetRight/width)
+	          // Offset left:	add offsetLeft/width to x-pos and scale x-pos to range:
+	          //			0, (1-offsetLeft/width)
+	          // Offset right:	scale x-pos to range: 0, (1+offsetRight/width)
 		  offsetX(config.stylus_offset_left / config.width),
 		  scaleX((config.width - config.stylus_offset_left + config.stylus_offset_right) /
 	                 config.width),
