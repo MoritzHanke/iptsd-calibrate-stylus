@@ -27,6 +27,8 @@ private:
 	// The stylus device.
 	std::optional<StylusDevice> m_stylus = std::nullopt;
 
+	uint stylusEventsIgnored = 0;
+
 public:
 	Daemon(const core::Config &config, const core::DeviceInfo &info)
 		: core::Application(config, info)
@@ -81,7 +83,16 @@ public:
 		if (!m_stylus.has_value())
 			return;
 
-		if (m_config.touchscreen_disable_on_stylus && m_touch.has_value()) {
+		if (stylus.proximity) {
+			if (stylusEventsIgnored < m_config.ignore_first_N_pen_events) {
+				stylusEventsIgnored++;
+				return;
+			}
+		}else {
+			stylusEventsIgnored = 0;
+		}
+
+		if (m_config.touchscreen_disable_on_stylus && m_touch.has_value() && stylus.proximity) {
 			if (m_touch->enabled())
 				m_touch->disable();
 		}

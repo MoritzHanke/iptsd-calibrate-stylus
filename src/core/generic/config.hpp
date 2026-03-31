@@ -55,6 +55,7 @@ public:
 
 	// [Stylus]
 	bool stylus_disable = false;
+	u32 ignore_first_N_pen_events = 0;
 	f64 stylus_tip_distance = 0;
 	f64 stylus_offset_left = 0.0;
 	f64 stylus_offset_right = -0.0;

@@ -184,6 +184,7 @@ private:
 		this->get(ini, "Stylus", "OffsetRight", m_config.stylus_offset_right);
 		this->get(ini, "Stylus", "OffsetTop", m_config.stylus_offset_top);
 		this->get(ini, "Stylus", "OffsetBottom", m_config.stylus_offset_bottom);
+		this->get(ini, "Stylus", "IgnoreFirstNEvents", m_config.ignore_first_N_pen_events);
 
 		this->get(ini, "DFT", "PositionMinAmp", m_config.dft_position_min_amp);
 		this->get(ini, "DFT", "PositionMinMag", m_config.dft_position_min_mag);
